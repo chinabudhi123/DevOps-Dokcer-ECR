@@ -25,12 +25,10 @@ pipeline {
 
         stage('Login to ECR') {
             steps {
-                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-jenkins-creds']]) {
-                    sh """
-                        aws ecr get-login-password --region $AWS_REGION | \
-                        docker login --username AWS --password-stdin $ECR_REPO
-                    """
-                }
+                sh """
+                    aws ecr get-login-password --region $AWS_REGION | \
+                    docker login --username AWS --password-stdin $ECR_REPO
+                """
             }
         }
 
@@ -42,7 +40,7 @@ pipeline {
 
         stage('Manual Approval') {
             steps {
-                input message: "✅ Approve deployment to EC2 at $REMOTE_HOST?", ok: "Deploy"
+                input message: "Approve deployment to EC2 at 13.201.124.43?", ok: "Deploy"
             }
         }
 
